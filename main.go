@@ -3,23 +3,22 @@ package main
 import (
 	"fmt"
 	"github.com/joho/godotenv"
-	"shop_mall/core"
+	"shop_mall/core/interface"
 	"shop_mall/router"
 )
 
-func main()  {
+func main() {
 	LoadEnv()
 	Run()
 }
 
-
-func Run(){
-	router.Render(core.GRouter)
-	core.GRouter.Run()
+func Run() {
+	router.Render(_interface.GRouter)
+	_interface.GRouter.Run()
 }
 
 func LoadEnv() {
-	if err:=godotenv.Load();err!=nil{
+	if err := godotenv.Load(); err != nil {
 		fmt.Println(err)
 		panic("加载配置文件失败")
 	}

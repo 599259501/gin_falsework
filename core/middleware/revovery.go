@@ -6,23 +6,21 @@ import (
 	"shop_mall/core/support/helper"
 )
 
-func ExceptionHandle() gin.HandlerFunc{
+func ExceptionHandle() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		defer func() {
 			var (
-				exception *support.Exception
+				exception   *support.Exception
 				isException bool
-				err interface{}
+				err         interface{}
 			)
-			if err := recover();err!=nil{
-				return;
+			if err = recover(); err == nil {
+				return
 			}
-
-			if exception,isException = err.(*support.Exception);!isException{
+			if exception, isException = err.(*support.Exception); !isException {
 				panic(err)
 				return
 			}
-
 			helper.Json(ctx).Fail(exception.Code, exception.Data, exception.Msg)
 			return
 		}()
