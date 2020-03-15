@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
@@ -34,6 +35,7 @@ func (session *Session) CreateId() string {
 }
 
 func (session *Session) Get() interface{} {
+	fmt.Println("session.store", session.store)
 	return session.store.Get()
 }
 
@@ -43,9 +45,11 @@ func (session *Session) Put(data interface{}) bool {
 
 func (session *Session) CreateDriver(driver string) error {
 	var err error
+	fmt.Println("创建store,driver是", driver)
 	switch driver {
 	case "redis":
 		session.store = NewRedisStore(session)
+		fmt.Println("创建redis.store")
 	default:
 		err = errors.New("not support file driver")
 	}

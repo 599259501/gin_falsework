@@ -1,4 +1,0 @@
-
-driver: "redis"
-lifttime: 7200
-session_name: "G_SESSION_ID"

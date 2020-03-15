@@ -21,7 +21,7 @@ func NewLoginService(app *core.App) *Login {
 func (service *Login) Auth(user RequestUser) (hasLogin bool) {
 	var userInfo interface{}
 	userInfo = service.GetApp().GetSession().Get()
-	if userInfo != nil {
+	if userInfo == nil {
 		return false
 	}
 

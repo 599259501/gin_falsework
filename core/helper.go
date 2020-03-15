@@ -28,3 +28,7 @@ func Env(key string) string {
 func Config(path string) (map[string]interface{}, error) {
 	return helper.Config(path)
 }
+
+func Logger(ctx *gin.Context) {
+
+}

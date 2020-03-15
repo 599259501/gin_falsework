@@ -12,9 +12,11 @@ var (
 )
 
 func init() {
+	fmt.Println("框架内加载配置信息")
 	config = make(map[string]map[string]interface{})
 	// 加载session配置信息
 	config["session"], _ = loadSessionCnf()
+	// 加载日志
 }
 
 func loadSessionCnf() (map[string]interface{}, error) {
@@ -23,12 +25,13 @@ func loadSessionCnf() (map[string]interface{}, error) {
 		err error
 	)
 
-	if cnf, err = helper.Config("./session.yaml"); err != nil {
+	if cnf, err = helper.CoreConfig("./session.yaml"); err != nil {
 		fmt.Println("加载session配置文件失败", err)
 		panic("加载session配置文件失败")
 		return cnf, err
 	}
 
+	fmt.Println("session.cnf", cnf)
 	return cnf, nil
 }
 
@@ -66,6 +69,7 @@ func (app *App) GetSession() *service.Session {
 	driverName, _ := config["session"]["driver"].(string)
 	sessionName, _ := config["session"]["session_name"].(string)
 	liftTime, _ := config["session"]["lifttime"].(int)
+	fmt.Println("session配置", config["session"])
 	if liftTime == 0 {
 		liftTime = 3600
 	}
