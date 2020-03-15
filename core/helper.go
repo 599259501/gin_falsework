@@ -30,5 +30,4 @@ func Config(path string) (map[string]interface{}, error) {
 }
 
 func Logger(ctx *gin.Context) {
-
 }

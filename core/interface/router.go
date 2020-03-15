@@ -17,7 +17,12 @@ var GRouter *gin.Engine
 
 func init() {
 	GRouter = gin.New()
+	initRouter()
 	renderBeforeMiddleware()
+}
+
+func initRouter() {
+	GRouter.Static("/assets", "./view/asserts")
 }
 
 func renderBeforeMiddleware() *gin.Engine {

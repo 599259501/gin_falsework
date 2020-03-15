@@ -1,10 +1,13 @@
 package response
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
 
 type ResponseStruct struct {
-	Msg string `json:"msg"`
-	Code int `json:"code"`
+	Msg  string      `json:"msg"`
+	Code int         `json:"code"`
 	Data interface{} `json:"data"`
 }
 
@@ -23,18 +26,18 @@ func NewJsonResponse(ctx *gin.Context) *JsonResponse {
 	}
 }
 
-func (json *JsonResponse)Success(data interface{}, msg string){
-	json.context.JSON(200, ResponseStruct{
-		Msg:msg,
-		Code:0,
-		Data:data,
+func (json *JsonResponse) Success(data interface{}, msg string) {
+	json.context.JSON(http.StatusOK, ResponseStruct{
+		Msg:  msg,
+		Code: 0,
+		Data: data,
 	})
 
 	json.context.Abort()
 }
 
-func (json *JsonResponse)Fail(code int,data interface{}, msg string){
-	json.context.JSON(200, ResponseStruct{
+func (json *JsonResponse) Fail(code int, data interface{}, msg string) {
+	json.context.JSON(http.StatusOK, ResponseStruct{
 		Msg:  msg,
 		Code: code,
 		Data: data,
