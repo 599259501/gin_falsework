@@ -1,20 +1,29 @@
-package services
+package service
+
+import "shop_mall/core"
 
 type RequestUser struct {
 	name     string
 	password string
 }
 
-type BaseLogin interface {
-	Auth(user RequestUser) (hasLogin bool)
-}
-
 type Login struct {
+	core.AppUnit
 }
 
-func NewLoginService() *Login {
-	return &Login{}
+func NewLoginService(app *core.App) *Login {
+	login := &Login{}
+	login.BindApp(app)
+
+	return login
 }
+
 func (service *Login) Auth(user RequestUser) (hasLogin bool) {
-	return hasLogin
+	var userInfo interface{}
+	userInfo = service.GetApp().GetSession().Get()
+	if userInfo != nil {
+		return false
+	}
+
+	return true
 }

@@ -35,6 +35,7 @@ func loadSessionCnf() (map[string]interface{}, error) {
 type App struct {
 	session *service.Session
 	context *gin.Context
+	unitMap map[string]interface{}
 }
 
 func NewApp(context *gin.Context) *App {
@@ -42,6 +43,7 @@ func NewApp(context *gin.Context) *App {
 		session: nil,
 		context: context,
 	}
+	app.unitMap = map[string]interface{}{}
 	app.startApp()
 	return app
 }
@@ -74,4 +76,20 @@ func (app *App) GetSession() *service.Session {
 
 func (app *App) GetContext() *gin.Context {
 	return app.context
+}
+
+func (app *App) GetUnit(name string) interface{} {
+	return app.unitMap[name]
+}
+
+type AppUnit struct {
+	App *App
+}
+
+func (unit *AppUnit) BindApp(app *App) {
+	unit.App = app
+}
+
+func (unit *AppUnit) GetApp() *App {
+	return unit.App
 }
